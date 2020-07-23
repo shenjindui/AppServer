@@ -38,7 +38,8 @@ public class User {
 
     @Column(name = "email",columnDefinition="varchar(32) COMMENT '用户邮箱'")
     @ApiModelProperty(value = "用户邮箱")
-    @NonNull private String email;
+    @NonNull
+    private String email;
 
     @Column(name = "phone",columnDefinition="varchar(32) COMMENT '用户电话'")
     @ApiModelProperty(value = "用户电话")

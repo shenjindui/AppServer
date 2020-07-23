@@ -7,6 +7,7 @@ import com.xingcheng.appserver.utils.request.LoginVO;
 import com.xingcheng.appserver.utils.request.RegisterVO;
 import com.xingcheng.appserver.utils.response.BaseAppAction;
 import com.xingcheng.appserver.utils.response.ResponseVO;
+import com.xingcheng.appserver.utils.util.JwtTokenUtils;
 import com.xingcheng.appserver.utils.util.MD5Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 /**
@@ -25,11 +29,17 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  **/
 
 @RestController
-@RequestMapping(value = "/user", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
 @Api(description = "用户信息管理")
 public class UserController extends BaseAppAction {
 
     protected final static Logger logger = LoggerFactory.getLogger(BaseAppAction.class);
+
+    private final JwtTokenUtils jwtTokenUtils;
+
+    public UserController(JwtTokenUtils jwtTokenUtils) {
+        this.jwtTokenUtils = jwtTokenUtils;
+    }
 
     @Autowired
     IUserService userService;
@@ -37,12 +47,17 @@ public class UserController extends BaseAppAction {
     @ApiOperation(value = "登陆操作", notes = "根据账号密码获取用户详细信息")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseVO login(@ApiParam(value = "请输入账号密码",required = true) @Validated LoginVO loginVO) {
-        User user = userService.findByUsernameAndPassword(MD5Utils.convertMD5(loginVO.getUsername()),
-                MD5Utils.convertMD5(loginVO.getPassword()));
-        if(user!=null){
+        User user = userService.findByUsernameAndPassword((loginVO.getUsername().trim()),
+                (loginVO.getPassword().trim()));
+        Map map = new HashMap();
+        map.put("username",user.getUsername());
+        map.put("email",user.getEmail());
+        /*if(user!=null){
             return successResponse(user, SysConstant.LOGIN_SUCCESS);
         }
-        return errorResponse(SysConstant.LOGIN_ERROR);
+
+        return errorResponse(SysConstant.LOGIN_ERROR);*/
+        return successResponse(jwtTokenUtils.createToken(map),SysConstant.LOGIN_SUCCESS);
     }
 
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
@@ -55,4 +70,16 @@ public class UserController extends BaseAppAction {
         }
         return errorResponse(SysConstant.SAVE_ERROR);
     }
+
+    /*@ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
+    @RequestMapping(value = "/getUserDetail", method = RequestMethod.POST)
+    public ResponseVO getUserDetail() {
+        User user = userService.save(User.of(MD5Utils.stringToMD5(registerVO.getUsername()),
+                MD5Utils.stringToMD5(registerVO.getPassword()),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
+        if(user!=null){
+            return successResponse(user, SysConstant.SAVE_SUCCESS);
+        }
+        return errorResponse(SysConstant.SAVE_ERROR);
+    }*/
+
 }

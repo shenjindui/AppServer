@@ -49,7 +49,7 @@ public class MD5Utils {
 
     // 测试主函数
     public static void main(String args[]) {
-        String s = new String("test");
+        String s = new String("123456");
         System.out.println("原始：" + s);
         System.out.println("MD5后：" + stringToMD5(s));
         System.out.println("解密的：" + convertMD5(convertMD5(s)));

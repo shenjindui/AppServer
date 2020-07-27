@@ -3,6 +3,7 @@ package com.xingcheng.appserver.utils.response;
  * @author : shenjindui
  * @date : 2019-12-30 20:34
  **/
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StringUtils;
@@ -136,7 +137,7 @@ public class BaseAppAction {
 
     protected ResponseVO createResponse(Object data, Integer status, String description) {
         ResponseVO response = new ResponseVO();
-        if(null != data) {
+        if(null != data && data instanceof PageHelper) {
             Map<String, Object> result = new HashMap();
             result.put(this.grid, data);
             response.setData(result);

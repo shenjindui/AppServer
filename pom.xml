@@ -99,6 +99,11 @@
             <scope>compile</scope>
         </dependency>
         <!--文件上传-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.1.2</version>
+        </dependency>
         <!--sftp文件上传-->
         <dependency>
             <groupId>com.jcraft</groupId>

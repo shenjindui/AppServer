@@ -49,4 +49,7 @@ public interface IUserService {
      * @return
      */
     User findUserByUsername(String username);
+
+
+    User get(User user);
 }

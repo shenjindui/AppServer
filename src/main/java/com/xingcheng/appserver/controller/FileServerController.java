@@ -37,4 +37,15 @@ public class FileServerController  extends BaseAppAction {
         }
         return errorResponse("上传失败");
     }
+    @ApiOperation(value = "文件上传到文件服务器后查看")
+    @RequestMapping(value = "/showFile", method = RequestMethod.POST)
+    public ResponseVO showFile(MultipartFile file) {
+        try {
+
+            return successResponse("上传成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return errorResponse("上传失败");
+    }
 }

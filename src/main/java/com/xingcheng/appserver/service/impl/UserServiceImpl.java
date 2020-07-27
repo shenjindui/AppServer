@@ -1,22 +1,16 @@
 package com.xingcheng.appserver.service.impl;
 
+import com.xingcheng.appserver.repository.IUserRepository;
 import com.xingcheng.appserver.entity.User;
-import com.xingcheng.appserver.repository.UserDao;
 import com.xingcheng.appserver.service.IUserService;
-import com.xingcheng.appserver.utils.exception.ExceptionFactory;
-import com.xingcheng.appserver.utils.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
-
-import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
     @Autowired
-    private UserDao userDao;
+    private IUserRepository userDao;
 
     @Override
     public User findByUsernameAndPassword(String username, String password) {
@@ -38,7 +32,7 @@ public class UserServiceImpl implements IUserService {
         /*if(ObjectUtils.isEmpty(userDao.findByUsername(MD5Utils.stringToMD5(user.getUsername())))==false){
            throw ExceptionFactory.getBizException("用户名不能重复");
         }*/
-        return userDao.save(user);
+        return null;
     }
 
     @Override
@@ -53,6 +47,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findUserByUsername(String username) {
-        return userDao.findByUsername(username);
+        return null;
+    }
+
+    @Override
+    public User get(User user) {
+        return /*userDao.getSQLManager().selectUnique("user.get", user, User.class)*/null;
     }
 }

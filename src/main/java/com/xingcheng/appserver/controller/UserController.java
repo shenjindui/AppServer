@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,15 +50,18 @@ public class UserController extends BaseAppAction {
     public ResponseVO login(@ApiParam(value = "请输入账号密码",required = true) @Validated LoginVO loginVO) {
         User user = userService.findByUsernameAndPassword((loginVO.getUsername().trim()),
                 (loginVO.getPassword().trim()));
-        Map map = new HashMap();
-        map.put("username",user.getUsername());
+        Map<String,Object> map = new HashMap();
+        map.put("user",user.getUsername());
         map.put("email",user.getEmail());
+        String token = jwtTokenUtils.createToken(map);
+        Map<String,Object> reusltMap = new HashMap();
+        reusltMap.put("user",user);
+        reusltMap.put("token",token);
         /*if(user!=null){
             return successResponse(user, SysConstant.LOGIN_SUCCESS);
         }
-
         return errorResponse(SysConstant.LOGIN_ERROR);*/
-        return successResponse(jwtTokenUtils.createToken(map),SysConstant.LOGIN_SUCCESS);
+        return successResponse(reusltMap,SysConstant.LOGIN_SUCCESS);
     }
 
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
@@ -71,15 +75,14 @@ public class UserController extends BaseAppAction {
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 
-    /*@ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
+    @ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
     @RequestMapping(value = "/getUserDetail", method = RequestMethod.POST)
     public ResponseVO getUserDetail() {
-        User user = userService.save(User.of(MD5Utils.stringToMD5(registerVO.getUsername()),
-                MD5Utils.stringToMD5(registerVO.getPassword()),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
+        User user = userService.get(User.of("shenjindui","123456","323@qq.com"));
         if(user!=null){
             return successResponse(user, SysConstant.SAVE_SUCCESS);
         }
         return errorResponse(SysConstant.SAVE_ERROR);
-    }*/
+    }
 
 }

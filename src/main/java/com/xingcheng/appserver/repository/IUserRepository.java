@@ -3,7 +3,7 @@ package com.xingcheng.appserver.repository;
 import com.xingcheng.appserver.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDao extends JpaRepository<User,Integer> {
+public interface IUserRepository extends JpaRepository<User,Integer> {
 
     User findById(int id);
 

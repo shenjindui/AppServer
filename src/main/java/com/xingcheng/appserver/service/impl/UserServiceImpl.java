@@ -19,12 +19,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User findById(int id) {
-        return null;
+        return userDao.findById(id);
     }
 
     @Override
     public void delete(int id) {
-
+        //userDao.delete();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUserService {
         /*if(ObjectUtils.isEmpty(userDao.findByUsername(MD5Utils.stringToMD5(user.getUsername())))==false){
            throw ExceptionFactory.getBizException("用户名不能重复");
         }*/
-        return null;
+        return userDao.save(user);
     }
 
     @Override
@@ -52,6 +52,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User get(User user) {
-        return /*userDao.getSQLManager().selectUnique("user.get", user, User.class)*/null;
+        return userDao.getOne(user.getId());
     }
 }

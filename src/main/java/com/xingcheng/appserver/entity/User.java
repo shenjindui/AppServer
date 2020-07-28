@@ -36,6 +36,11 @@ public class User {
     @ApiModelProperty(value = "用户密码")
     @NonNull private String password;
 
+    @Column(name = "nicknames",columnDefinition="varchar(32) COMMENT '昵称'")
+    @ApiModelProperty(value = "昵称")
+    @NonNull private String nicknames;
+
+
     @Column(name = "email",columnDefinition="varchar(32) COMMENT '用户邮箱'")
     @ApiModelProperty(value = "用户邮箱")
     @NonNull

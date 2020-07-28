@@ -19,4 +19,7 @@ public class RegisterVO {
 
     @Email(message = "错误的邮箱格式")
     private String email;
+
+    @NotNull(message = "nicknames不能为空")
+    private String nicknames;
 }

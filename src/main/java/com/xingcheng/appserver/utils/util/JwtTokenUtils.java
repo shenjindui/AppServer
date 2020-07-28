@@ -71,8 +71,10 @@ public class JwtTokenUtils implements InitializingBean {
 
         HashMap map =(HashMap) claims.get("auth");
 
-        User principal = User.of(map.get("user").toString(), map.get("password").toString(),map.get("email").toString());
-
+        User principal = new User();
+        principal.setUsername(map.get("username").toString());
+        principal.setUsername(map.get("password").toString());
+        principal.setUsername(map.get("email").toString());
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 

@@ -1,5 +1,6 @@
 package com.xingcheng.appserver.controller;
 
+import com.xingcheng.appserver.common.TokenCheck;
 import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IUserService;
 import com.xingcheng.appserver.utils.constant.SysConstant;
@@ -50,39 +51,41 @@ public class UserController extends BaseAppAction {
     public ResponseVO login(@ApiParam(value = "请输入账号密码",required = true) @Validated LoginVO loginVO) {
         User user = userService.findByUsernameAndPassword((loginVO.getUsername().trim()),
                 (loginVO.getPassword().trim()));
+        if(user==null){
+            return errorResponse(SysConstant.LOGIN_ERROR);
+        }
         Map<String,Object> map = new HashMap();
         map.put("user",user.getUsername());
         map.put("email",user.getEmail());
         String token = jwtTokenUtils.createToken(map);
-        Map<String,Object> reusltMap = new HashMap();
-        reusltMap.put("user",user);
-        reusltMap.put("token",token);
-        /*if(user!=null){
-            return successResponse(user, SysConstant.LOGIN_SUCCESS);
-        }
-        return errorResponse(SysConstant.LOGIN_ERROR);*/
-        return successResponse(reusltMap,SysConstant.LOGIN_SUCCESS);
+        map.clear();
+        map.put("user",user);
+        map.put("token",token);
+        return successResponse(map,SysConstant.LOGIN_SUCCESS);
     }
 
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseVO register(@ApiParam(value = "请输入注册信息",required = true) @Validated RegisterVO registerVO) {
         User user = userService.save(User.of(MD5Utils.stringToMD5(registerVO.getUsername()),
-                MD5Utils.stringToMD5(registerVO.getPassword()),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
+                MD5Utils.stringToMD5(registerVO.getPassword()),registerVO.getEmail(),registerVO.getNicknames()).setEnabled(SysConstant.ENABLE));
         if(user!=null){
             return successResponse(user, SysConstant.SAVE_SUCCESS);
         }
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 
+    //@TokenCheck
     @ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
     @RequestMapping(value = "/getUserDetail", method = RequestMethod.POST)
-    public ResponseVO getUserDetail() {
-        User user = userService.get(User.of("shenjindui","123456","323@qq.com"));
-        if(user!=null){
+    public ResponseVO getUserDetail(@RequestBody User user) {
+       /* User u = User.builder().username(user.getUsername()).password(user.getPassword()).build();
+        User resultUser = userService.get(u);
+        if(resultUser!=null){
             return successResponse(user, SysConstant.SAVE_SUCCESS);
-        }
+        }*/
         return errorResponse(SysConstant.SAVE_ERROR);
     }
+
 
 }

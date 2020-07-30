@@ -1,7 +1,6 @@
 package com.xingcheng.appserver.controller;
 
-import com.baomidou.mybatisplus.toolkit.MapUtils;
-import com.xingcheng.appserver.common.TokenCheck;
+import com.xingcheng.appserver.common.Limiter;
 import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IMailService;
 import com.xingcheng.appserver.service.IUserService;
@@ -18,6 +17,7 @@ import com.xingcheng.appserver.utils.util.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,10 +68,8 @@ public class UserController extends BaseAppAction {
         if(user==null){
             return errorResponse(SysConstant.LOGIN_ERROR);
         }
+        String token = jwtTokenUtils.createToken(String.valueOf(user.getId()),user.getUsername());
         Map<String,Object> map = new HashMap();
-        map.put("user",user.getUsername());
-        map.put("email",user.getEmail());
-        String token = jwtTokenUtils.createToken(map);
         map.clear();
         map.put("user",user);
         map.put("token",token);
@@ -90,15 +88,15 @@ public class UserController extends BaseAppAction {
     }
 
     //@TokenCheck
+    //@Limiter(frequency = 10) 接口防刷
     @ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
     @RequestMapping(value = "/getUserDetail", method = RequestMethod.POST)
-    public ResponseVO getUserDetail(@RequestBody User user) {
-       /* User u = User.builder().username(user.getUsername()).password(user.getPassword()).build();
-        User resultUser = userService.get(u);
-        if(resultUser!=null){
-            return successResponse(user, SysConstant.SAVE_SUCCESS);
-        }*/
-        return errorResponse(SysConstant.SAVE_ERROR);
+    public ResponseVO getUserDetail(@ApiParam(value = "请输入账号id",required = true) @NonNull @RequestParam int  id) {
+        User user = userService.findById(id);
+        if(user!=null){
+            return successResponse(user, SysConstant.GET_SUCCESS);
+        }
+        return errorResponse(SysConstant.GET_ERROR);
     }
 
     @ApiOperation(value = "忘记密码，重置密码，检验邮箱系统存在", notes = "忘记密码重置密码检验邮箱系统存在")

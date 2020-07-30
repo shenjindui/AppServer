@@ -14,6 +14,7 @@ import com.xingcheng.appserver.utils.response.ResponseVO;
 import com.xingcheng.appserver.utils.util.JwtTokenUtils;
 import com.xingcheng.appserver.utils.util.MD5Utils;
 import com.xingcheng.appserver.utils.util.RandomUtils;
+import com.xingcheng.appserver.utils.util.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -55,6 +56,9 @@ public class UserController extends BaseAppAction {
 
     @Autowired
     private  IMailService mailService;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @ApiOperation(value = "登陆操作", notes = "根据账号密码获取用户详细信息")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -120,7 +124,7 @@ public class UserController extends BaseAppAction {
             String subject=(forgotVO.getSubject().equals(null)||forgotVO.getSubject().equals(""))?"来自星辰远征APP的安全验证邮件":forgotVO.getSubject();//主题
             String content=context;//内容
             mailService.sendHtmlMail(to,subject,content);
-            //redisUtils.set(MapUtils.getString(params,"loginName"),code,60);
+            //redisUtils.set(forgotVO.getUsername(),code,60); 暂时不使用redis
             return successResponse("发送成功,请及时查收验证码!", SysConstant.SEND_SUCCESS);
         } catch (Exception e) {
             return errorResponse(e.getMessage());

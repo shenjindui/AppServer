@@ -1,5 +1,7 @@
 package com.xingcheng.appserver.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.xingcheng.appserver.mapper.IUserMapper;
 import com.xingcheng.appserver.repository.IUserRepository;
 import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IUserService;
@@ -16,6 +18,9 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private IUserMapper userMapper;
 
     @Override
     public User findByUsernameAndPassword(String username, String password) {
@@ -36,6 +41,10 @@ public class UserServiceImpl implements IUserService {
     public User save(User user){
         if(ObjectUtils.isEmpty(userRepository.findByUsername(user.getUsername()))==false){
            throw ExceptionFactory.getBizException("用户名:"+user.getUsername()+"已存在！");
+        }
+        Integer count = userMapper.selectCount(new EntityWrapper<User>().eq("email", user.getEmail()));
+        if(count >= 1){
+            throw ExceptionFactory.getBizException("此邮箱:"+user.getEmail()+"已被注册！");
         }
         return userRepository.save(user);
     }

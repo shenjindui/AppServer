@@ -1,15 +1,19 @@
 package com.xingcheng.appserver.controller;
 
+import com.baomidou.mybatisplus.toolkit.MapUtils;
 import com.xingcheng.appserver.common.TokenCheck;
 import com.xingcheng.appserver.entity.User;
+import com.xingcheng.appserver.service.IMailService;
 import com.xingcheng.appserver.service.IUserService;
 import com.xingcheng.appserver.utils.constant.SysConstant;
+import com.xingcheng.appserver.utils.request.ForgotVO;
 import com.xingcheng.appserver.utils.request.LoginVO;
 import com.xingcheng.appserver.utils.request.RegisterVO;
 import com.xingcheng.appserver.utils.response.BaseAppAction;
 import com.xingcheng.appserver.utils.response.ResponseVO;
 import com.xingcheng.appserver.utils.util.JwtTokenUtils;
 import com.xingcheng.appserver.utils.util.MD5Utils;
+import com.xingcheng.appserver.utils.util.RandomUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -47,7 +51,10 @@ public class UserController extends BaseAppAction {
     }
 
     @Autowired
-    IUserService userService;
+    private IUserService userService;
+
+    @Autowired
+    private  IMailService mailService;
 
     @ApiOperation(value = "登陆操作", notes = "根据账号密码获取用户详细信息")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -73,7 +80,7 @@ public class UserController extends BaseAppAction {
         User user = userService.save(User.of((registerVO.getUsername()),
                 (registerVO.getPassword()),registerVO.getNicknames(),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
         if(user!=null){
-            return successResponse(user, SysConstant.SAVE_SUCCESS);
+            return successResponse(user, SysConstant.REGISTER_SUCCESS);
         }
         return errorResponse(SysConstant.SAVE_ERROR);
     }
@@ -97,7 +104,27 @@ public class UserController extends BaseAppAction {
         if(users==null || users.isEmpty() || users.size() < 1){
             return errorResponse("系统不存在该账号："+email);
         }
-        return successResponse(users, "忘记密码邮箱检验正确！");
+        return successResponse("忘记密码邮箱检验正确！");
+    }
+
+    @ApiOperation(value = "忘记密码发送邮件方法，目前使用QQ邮箱", notes = "忘记密码发送邮件方法目前使用QQ邮箱", httpMethod = "POST")
+    @RequestMapping(value = "/forgetSendMail", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public ResponseVO forgetSendMail(@ApiParam(value = "请提供对应的信息",required = true) @Validated ForgotVO forgotVO) {
+        try {
+            Map<String,Object> parms=new HashMap<>();
+            String code= RandomUtils.stringWithNumber(6);
+            String context = "欢迎使用星辰远征APP,您的验证码是:<a>"+code+"</a>,本验证码60秒内有效!";
+            parms.put("content",context);
+            String to= forgotVO.getTo();//发送给谁
+            String subject=(forgotVO.getSubject().equals(null)||forgotVO.getSubject().equals(""))?"来自星辰远征APP的安全验证邮件":forgotVO.getSubject();//主题
+            String content=context;//内容
+            mailService.sendHtmlMail(to,subject,content);
+            //redisUtils.set(MapUtils.getString(params,"loginName"),code,60);
+            return successResponse("发送成功,请及时查收验证码!", SysConstant.SEND_SUCCESS);
+        } catch (Exception e) {
+            return errorResponse(e.getMessage());
+        }
     }
 
 }

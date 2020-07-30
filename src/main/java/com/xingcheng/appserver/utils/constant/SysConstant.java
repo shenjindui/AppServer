@@ -8,6 +8,8 @@ public interface SysConstant {
     //说明
     String LOGIN_SUCCESS = "登陆成功";
 
+    String SEND_SUCCESS = "发送成功";
+
     String PARMS_ERROR = "参数错误";
 
     String LOGIN_ERROR= "账号或密码错误";

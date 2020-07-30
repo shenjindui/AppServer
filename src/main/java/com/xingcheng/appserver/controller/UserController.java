@@ -49,8 +49,8 @@ public class UserController extends BaseAppAction {
     @ApiOperation(value = "登陆操作", notes = "根据账号密码获取用户详细信息")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseVO login(@ApiParam(value = "请输入账号密码",required = true) @Validated LoginVO loginVO) {
-        User user = userService.findByUsernameAndPassword((loginVO.getUsername().trim()),
-                (loginVO.getPassword().trim()));
+        User user = userService.findByUsernameAndPassword(((loginVO.getUsername().trim())),
+                ((loginVO.getPassword().trim())));
         if(user==null){
             return errorResponse(SysConstant.LOGIN_ERROR);
         }
@@ -67,8 +67,8 @@ public class UserController extends BaseAppAction {
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseVO register(@ApiParam(value = "请输入注册信息",required = true) @Validated RegisterVO registerVO) {
-        User user = userService.save(User.of(MD5Utils.stringToMD5(registerVO.getUsername()),
-                MD5Utils.stringToMD5(registerVO.getPassword()),registerVO.getEmail(),registerVO.getNicknames()).setEnabled(SysConstant.ENABLE));
+        User user = userService.save(User.of((registerVO.getUsername()),
+                (registerVO.getPassword()),registerVO.getNicknames(),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
         if(user!=null){
             return successResponse(user, SysConstant.SAVE_SUCCESS);
         }

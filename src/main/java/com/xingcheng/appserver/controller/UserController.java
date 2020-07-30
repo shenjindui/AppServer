@@ -87,8 +87,8 @@ public class UserController extends BaseAppAction {
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 
-    //@TokenCheck
-    //@Limiter(frequency = 10) 接口防刷
+    //@TokenCheck  token值检验（暂未启用）
+    //@Limiter(frequency = 10) 接口防刷 （暂未启用）
     @ApiOperation(value = "获取用户个人详细信息", notes = "获取用户个人详细信息")
     @RequestMapping(value = "/getUserDetail", method = RequestMethod.POST)
     public ResponseVO getUserDetail(@ApiParam(value = "请输入账号id",required = true) @NonNull @RequestParam int  id) {

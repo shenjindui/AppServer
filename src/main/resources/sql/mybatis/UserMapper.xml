@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingcheng.appserver.mapper.IUserMapper">
+
+    <resultMap id="sysUserMap" type="java.util.Map">
+        <result column="id" property="id" javaType="java.lang.Integer"/>
+        <result column="createtime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="email" property="email" javaType="java.lang.String"/>
+        <result column="enabled" property="enabled" javaType="java.lang.String"/>
+        <result column="password" property="password" javaType="java.lang.String"/>
+        <result column="phone" property="phone" javaType="java.lang.String"/>
+
+        <result column="remark" property="remark" javaType="java.lang.String"/>
+        <result column="username" property="username" javaType="java.lang.String"/>
+        <result column="nicknames" property="nicknames" javaType="java.lang.String"/>
+    </resultMap>
+
+    <sql id="column_list">
+        user.id,
+        user.email,
+        user.enabled,
+        user.password,
+        user.phone,
+        user.username,
+        user.remark,
+        user.nicknames,
+    </sql>
+
+    <sql id="where_filters">
+        <where>
+            <if test="id!=null and id!=''">AND user.id = #{value}</if>
+            <if test="email!=null and email!=''">AND user.email = #{email}</if>
+            <if test="enabled!=null and enabled!=''">AND user.enabled = #{enabled}</if>
+            <if test="password!=null and password!=''">AND user.password = #{password}</if>
+
+            <if test="phone!=null and phone!=''">AND user.phone = #{phone}</if>
+            <if test="username!=null and username!=''">AND user.username = #{username}</if>
+            <if test="remark!=null and remark!=''">AND user.remark = #{remark}</if>
+            <if test="nicknames!=null and nicknames!=''">AND user.nicknames = #{nicknames}</if>
+        </where>
+    </sql>
+
+    <!--<!&#45;&#45;根据条件查询列表&ndash;&gt;
+    <select id="findSysUserList" parameterType="map" resultMap="sysUserMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM sys_user sys_user
+        <include refid="where_filters"/>
+        ORDER BY sys_user.CREATE_TIME DESC
+        LIMIT #{startIndex},#{pageSize}
+    </select>
+    <select id="findSysUserListAll" parameterType="map" resultMap="sysUserMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM sys_user sys_user
+        <include refid="where_filters"/>
+        ORDER BY sys_user.CREATE_TIME DESC
+    </select>-->
+
+    <!--<select id="selectById"  parameterType="java.lang.Integer" resultType="com.xingcheng.appserver.entity.User">
+        SELECT
+        <include refid="column_list"/>
+        FROM user user
+        <include refid="where_filters"/>
+    </select>-->
+
+    <!--<select id="selectUserList" resultType="User">
+        SELECT * FROM sys_user WHERE state=#{state}
+    </select>-->
+
+</mapper>

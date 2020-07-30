@@ -17,10 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -87,5 +90,14 @@ public class UserController extends BaseAppAction {
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 
+    @ApiOperation(value = "忘记密码，重置密码，检验邮箱系统存在", notes = "忘记密码重置密码检验邮箱系统存在")
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
+    public ResponseVO forgotPassword(@ApiParam(value = "请输入邮箱账号信息",required = true) @Email(message = "请输入正确的邮箱") @RequestParam String  email){
+        List<User> users = userService.findByEmail(email);
+        if(users==null || users.isEmpty() || users.size() < 1){
+            return errorResponse("系统不存在该账号："+email);
+        }
+        return successResponse(users, "忘记密码邮箱检验正确！");
+    }
 
 }

@@ -52,4 +52,7 @@ public interface IUserService {
 
 
     User get(User user);
+
+
+    List<User> findByEmail(String email);
 }

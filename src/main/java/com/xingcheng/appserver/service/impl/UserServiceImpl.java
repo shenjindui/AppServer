@@ -10,19 +10,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
+
 @Service("userService")
 public class UserServiceImpl implements IUserService {
     @Autowired
-    private IUserRepository userDao;
+    private IUserRepository userRepository;
 
     @Override
     public User findByUsernameAndPassword(String username, String password) {
-        return userDao.findByUsernameAndPassword(username,password);
+        return userRepository.findByUsernameAndPassword(username,password);
     }
 
     @Override
     public User findById(int id) {
-        return userDao.findById(id);
+        return userRepository.findById(id);
     }
 
     @Override
@@ -32,10 +34,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User save(User user){
-        if(ObjectUtils.isEmpty(userDao.findByUsername(user.getUsername()))==false){
+        if(ObjectUtils.isEmpty(userRepository.findByUsername(user.getUsername()))==false){
            throw ExceptionFactory.getBizException("用户名:"+user.getUsername()+"已存在！");
         }
-        return userDao.save(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -55,6 +57,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User get(User user) {
-        return userDao.getOne(user.getId());
+        return userRepository.getOne(user.getId());
+    }
+
+    @Override
+    public List<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

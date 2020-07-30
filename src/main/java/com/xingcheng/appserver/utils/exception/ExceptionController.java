@@ -43,7 +43,7 @@ public class ExceptionController {
     //其他错误
     @ExceptionHandler({Exception.class})
     public ResponseVO exception(Exception ex) {
-        return resultFormat(ERROR_CODE, new Exception(OtherExceptionStr));
+        return resultFormat(ERROR_CODE, new Exception(ex.getMessage()));
     }
 
     private <T extends Throwable> ResponseVO resultFormat(Integer code, T ex) {

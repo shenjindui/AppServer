@@ -3,9 +3,12 @@ package com.xingcheng.appserver.service.impl;
 import com.xingcheng.appserver.repository.IUserRepository;
 import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IUserService;
+import com.xingcheng.appserver.utils.exception.ExceptionFactory;
+import com.xingcheng.appserver.utils.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -28,10 +31,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User save(User user) {
-        /*if(ObjectUtils.isEmpty(userDao.findByUsername(MD5Utils.stringToMD5(user.getUsername())))==false){
-           throw ExceptionFactory.getBizException("用户名不能重复");
-        }*/
+    public User save(User user){
+        if(ObjectUtils.isEmpty(userDao.findByUsername(user.getUsername()))==false){
+           throw ExceptionFactory.getBizException("用户名:"+user.getUsername()+"已存在！");
+        }
         return userDao.save(user);
     }
 

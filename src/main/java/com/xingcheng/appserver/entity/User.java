@@ -47,6 +47,14 @@ public class User implements Serializable {
     @NonNull
     private String email;
 
+    @Column(name = "icon",columnDefinition="varchar(128) COMMENT '用户头像'")
+    @ApiModelProperty(value = "用户头像")
+    private String icon;
+
+    @Column(name = "usercredit",columnDefinition="varchar(32) COMMENT '用户信誉（百分制）'")
+    @ApiModelProperty(value = "用户信誉")
+    private String usercredit;
+
     @Column(name = "phone",columnDefinition="varchar(32) COMMENT '用户电话'")
     @ApiModelProperty(value = "用户电话")
     private String phone;
@@ -64,16 +72,20 @@ public class User implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", nicknames='" + nicknames + '\'' +
                 ", email='" + email + '\'' +
+                ", icon='" + icon + '\'' +
+                ", usercredit='" + usercredit + '\'' +
                 ", phone='" + phone + '\'' +
                 ", enabled='" + enabled + '\'' +
-                ", createtime='" + createtime + '\'' +
+                ", createtime=" + createtime +
                 ", remark='" + remark + '\'' +
                 '}';
     }

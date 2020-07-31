@@ -4,24 +4,24 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.apache.commons.collections.MapUtils;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
 
 /**
-* @类名称 BaseClubMemberEntity
-* @类描述 <pre>请填写</pre>
-* @作者 shenjindui V1
-* @创建时间 2020-02-22
+* @类名称 SysOperationLog
+* @类描述 <pre>系统操作日志表</pre>
+* @作者 shenjindui
+* @创建时间 2020-07-22
 * @版本 V1.0
 * @修改记录
 *
 * 版本 修改人 修改时间 修改内容描述
 * ----------------------------------------------
-* V1.0 shenjindui 2020-02-22 新建
+* V1.0 shenjindui 2020-07-22 新建
 * ----------------------------------------------
 *
 */
@@ -72,5 +72,22 @@ public class SysOperationLog  implements Serializable{
     @Column(name = "remark",columnDefinition = "varchar(255) COMMENT '备注'")
     private String remark;
 
+    @CreatedDate
+    @Column(name = "createtime",columnDefinition="datetime COMMENT '创建时间'")
+    @ApiModelProperty(value = "创建时间")
+    private Date createtime;
 
+    @Override
+    public String toString() {
+        return "SysOperationLog{" +
+                "id='" + id + '\'' +
+                ", userid='" + userid + '\'' +
+                ", username='" + username + '\'' +
+                ", classname='" + classname + '\'' +
+                ", methodname='" + methodname + '\'' +
+                ", ip='" + ip + '\'' +
+                ", remark='" + remark + '\'' +
+                ", createtime=" + createtime +
+                '}';
+    }
 }

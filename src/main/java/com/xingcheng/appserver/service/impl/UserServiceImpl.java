@@ -1,6 +1,8 @@
 package com.xingcheng.appserver.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.xingcheng.appserver.common.service.CommonServiceImpl;
+import com.xingcheng.appserver.common.vo.SysUserVo;
 import com.xingcheng.appserver.mapper.IUserMapper;
 import com.xingcheng.appserver.repository.IUserRepository;
 import com.xingcheng.appserver.entity.User;
@@ -15,7 +17,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends CommonServiceImpl<User, User, Integer> implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
@@ -37,7 +39,7 @@ public class UserServiceImpl implements IUserService {
         //userDao.delete();
     }
 
-    @Override
+    /*@Override
     public User save(User user){
         if(ObjectUtils.isEmpty(userRepository.findByUsername(user.getUsername()))==false){
            throw ExceptionFactory.getBizException("用户名:"+user.getUsername()+"已存在！");
@@ -46,8 +48,9 @@ public class UserServiceImpl implements IUserService {
         if(count >= 1){
             throw ExceptionFactory.getBizException("此邮箱:"+user.getEmail()+"已被注册！");
         }
-        return userRepository.save(user);
-    }
+        return userRepository.saveAndFlush(user);
+        //return userRepository.saveAndFlush(user);
+    }*/
 
     @Override
     public Page<User> findAll(int page, int pagesize) {
@@ -66,7 +69,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User get(User user) {
-        return userRepository.getOne(user.getId());
+        return  null;
+        //return userRepository.getOne(user.getId());
     }
 
     @Override

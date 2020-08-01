@@ -79,11 +79,11 @@ public class UserController extends BaseAppAction {
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseVO register(@ApiParam(value = "请输入注册信息",required = true) @Validated RegisterVO registerVO){
-        User user = userService.save(User.of((registerVO.getUsername()),
+        /*User user = userService.save(User.of((registerVO.getUsername()),
                 (registerVO.getPassword()),registerVO.getNicknames(),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
         if(user!=null){
             return successResponse(user, SysConstant.REGISTER_SUCCESS);
-        }
+        }*/
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 

@@ -95,6 +95,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/register", "/error/**").permitAll()
                 .antMatchers("/api/user/forgotPassword", "/error/**").permitAll()
                 .antMatchers("/api/user/forgetSendMail", "/error/**").permitAll()
+
+                .antMatchers("/sysUser1/get/*", "/error/**").permitAll()
+
                 // 所有请求都需要认证
                 .anyRequest().authenticated();
 

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.apache.commons.collections.MapUtils;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -36,11 +37,8 @@ public class SysOperationLog  implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    @NonNull
-    private String id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
     @ApiModelProperty(value = "操作用户编号")
     @Column(name = "userid",columnDefinition = "varchar(32) COMMENT '操作用户编号'")
@@ -80,7 +78,7 @@ public class SysOperationLog  implements Serializable{
     @Override
     public String toString() {
         return "SysOperationLog{" +
-                "id='" + id + '\'' +
+                "uuid='" + uuid + '\'' +
                 ", userid='" + userid + '\'' +
                 ", username='" + username + '\'' +
                 ", classname='" + classname + '\'' +

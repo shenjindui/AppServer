@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,10 +25,8 @@ import java.util.Date;
 public class Job implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    private int id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
     @Column(name = "jobname",columnDefinition="varchar(32) COMMENT '项目名称'")
     @ApiModelProperty(value = "任务名称")
@@ -82,7 +81,7 @@ public class Job implements Serializable {
     @Override
     public String toString() {
         return "Job{" +
-                "id=" + id +
+                "uuid=" + uuid +
                 ", jobname='" + jobname + '\'' +
                 ", enabled='" + enabled + '\'' +
                 ", createtime=" + createtime +

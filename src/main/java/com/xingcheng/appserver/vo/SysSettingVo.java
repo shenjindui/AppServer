@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class SysSettingVo extends PageCondition implements Serializable {
-    private String id;//表id
+    private String uuid;//表id
 
     private String sysName;//系统名称
 

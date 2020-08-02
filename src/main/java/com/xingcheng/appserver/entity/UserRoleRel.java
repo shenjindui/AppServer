@@ -26,10 +26,8 @@ public class UserRoleRel  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    private int id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
 
     @ApiModelProperty(value = "角色编号")
@@ -63,7 +61,7 @@ public class UserRoleRel  implements Serializable {
     @Override
     public String toString() {
         return "UserRoleRel{" +
-                "id=" + id +
+                "uuid=" + uuid +
                 ", roleid='" + roleid + '\'' +
                 ", userid='" + userid + '\'' +
                 ", defaultRole='" + defaultRole + '\'' +

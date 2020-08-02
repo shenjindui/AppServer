@@ -18,7 +18,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl extends CommonServiceImpl<UserVO, User, Integer> implements IUserService {
+public class UserServiceImpl extends CommonServiceImpl<UserVO, User, String> implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
@@ -31,14 +31,14 @@ public class UserServiceImpl extends CommonServiceImpl<UserVO, User, Integer> im
     }
 
     @Override
-    public User findById(int id) {
-        return userRepository.findById(id);
+    public User findByUuid(String id) {
+        return userRepository.findByUuid(id);
     }
 
-    @Override
+  /*  @Override
     public void delete(int id) {
         //userDao.delete();
-    }
+    }*/
 
     /*@Override
     public User save(User user){

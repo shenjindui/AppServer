@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IUserRepository extends CommonRepository<User, Integer> {
+public interface IUserRepository extends CommonRepository<User, String> {
 
-    User findById(int id);
+    User findByUuid(String id);
 
     User findByUsername(String username);
 

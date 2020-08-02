@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 public class SysUserVo extends PageCondition implements Serializable {
+
     private String userId;//用户id
 
     private String loginName;//登录名

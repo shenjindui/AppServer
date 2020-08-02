@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -21,10 +22,8 @@ import java.util.Date;
 public class WorkRoomItemRel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    private int id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
     @Column(name = "workroomid",columnDefinition="varchar(32) COMMENT '工作室编号'")
     @ApiModelProperty(value = "工作室编号")
@@ -52,7 +51,7 @@ public class WorkRoomItemRel implements Serializable {
     @Override
     public String toString() {
         return "WorkRoomItemRel{" +
-                "id=" + id +
+                "uuid=" + uuid +
                 ", workroomid='" + workroomid + '\'' +
                 ", itemid='" + itemid + '\'' +
                 ", enabled='" + enabled + '\'' +

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -23,11 +24,8 @@ public class SysLoginLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    @NonNull
-    private String id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
     @ApiModelProperty(value = "用户编号")
     @Column(name = "userid",columnDefinition = "varchar(32) COMMENT '用户编号'")
@@ -63,7 +61,7 @@ public class SysLoginLog implements Serializable {
     @Override
     public String toString() {
         return "SysLoginLog{" +
-                "id='" + id + '\'' +
+                "uuid='" + uuid + '\'' +
                 ", userid='" + userid + '\'' +
                 ", username='" + username + '\'' +
                 ", mac='" + mac + '\'' +

@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
 
 @Service
 @Transactional
-public class SysSettingServiceImpl extends CommonServiceImpl<SysSettingVo, SysSetting, Integer> implements ISysSettingService {
+public class SysSettingServiceImpl extends CommonServiceImpl<SysSettingVo, SysSetting, String> implements ISysSettingService {
 
     @PersistenceContext
     private EntityManager em;

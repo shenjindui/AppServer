@@ -5,6 +5,7 @@ import com.xingcheng.appserver.common.entity.PageInfo;
 import com.xingcheng.appserver.common.entity.Result;
 import com.xingcheng.appserver.common.repository.CommonRepository;
 import com.xingcheng.appserver.utils.util.CopyUtil;
+import com.xingcheng.appserver.utils.util.UUIDUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.NotFound;
 import org.springframework.beans.BeanUtils;
@@ -107,7 +108,7 @@ public class CommonServiceImpl<V, E, T> implements CommonService<V, E, T> {
                         }
                     }else{
                         //如果Id主键为空，则为新增
-                       // fieldValue = UUIDUtil.getUUID();
+                       fieldValue = UUIDUtil.getUUID();
                         //set方法，第一个参数是对象
                         field.set(entity, fieldValue);
                         isInsert = true;

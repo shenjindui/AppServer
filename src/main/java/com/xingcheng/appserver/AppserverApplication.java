@@ -64,10 +64,9 @@ class IndexController {
         return applicationArguments -> {
             try {
                 //系统启动时获取数据库数据，设置到公用静态集合sysSettingMap
-                SysSettingVo sysSettingVo = sysSettingService.get(1).getData();
+                SysSettingVo sysSettingVo = sysSettingService.get("123456789876543234567890").getData();
                 sysSettingVo.setUserInitPassword(null);//隐藏部分属性
                 SysSettingUtil.setSysSettingMap(sysSettingVo);
-
                 //获取本机内网IP
                 log.info("启动成功：" + "http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/xingcheng/swagger-ui.html");
             } catch (UnknownHostException e) {

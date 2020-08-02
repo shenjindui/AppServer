@@ -3,6 +3,7 @@ package com.xingcheng.appserver.entity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,10 +25,8 @@ import java.util.Date;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(hidden = true)
-    @Column(name = "id",columnDefinition="int(32) COMMENT '编号id'")
-    private int id;
+    @Column(name = "uuid",length = 32,columnDefinition="varchar(32) COMMENT '编号uuid'")
+    private String uuid;
 
     @ApiModelProperty(value = "用户名")
     @Column(name = "username",columnDefinition="varchar(64) COMMENT '用户名'")
@@ -76,7 +75,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "uuid=" + uuid +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", nicknames='" + nicknames + '\'' +

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface IUserService extends CommonService<UserVO, User, Integer> {
+public interface IUserService extends CommonService<UserVO, User, String> {
 
     User findByUsernameAndPassword(String username,String password);
     /**
@@ -16,13 +16,13 @@ public interface IUserService extends CommonService<UserVO, User, Integer> {
      * @param id
      * @return
      */
-    User findById(int id);
+    User findByUuid(String id);
 
     /**
      *
      * @param id
      */
-    void delete(int id);
+    //void delete(String id);
 
     /**
      *

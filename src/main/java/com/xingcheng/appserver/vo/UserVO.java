@@ -19,7 +19,7 @@ import java.util.Date;
 public class UserVO extends PageCondition implements Serializable {
 
     @ApiModelProperty(hidden = true)
-    private int id;
+    private String uuid;
 
     @ApiModelProperty(value = "用户名")
     private String username;

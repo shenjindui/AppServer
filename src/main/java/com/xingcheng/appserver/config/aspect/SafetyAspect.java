@@ -150,7 +150,8 @@ public class SafetyAspect {
         } catch (Throwable e) {
            //输出到日志文件中
            log.error(ErrorUtil.errorInfoToString(e));
-            return Result.of(null, 400, "加解密异常：\n\t" + e.getMessage());
+            //return Result.of(null, 400, "加解密异常：\n\t" + e.getMessage());
+            return Result.of(null, 400, e.getMessage());
         }
     }
 }

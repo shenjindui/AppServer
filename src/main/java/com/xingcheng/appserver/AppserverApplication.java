@@ -64,6 +64,7 @@ class IndexController {
         return applicationArguments -> {
             try {
                 //系统启动时获取数据库数据，设置到公用静态集合sysSettingMap
+                //这边的ID对应的是数据库设置表的第一条数据的id
                 SysSettingVo sysSettingVo = sysSettingService.get("123456789876543234567890").getData();
                 sysSettingVo.setUserInitPassword(null);//隐藏部分属性
                 SysSettingUtil.setSysSettingMap(sysSettingVo);

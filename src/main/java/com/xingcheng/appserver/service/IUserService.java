@@ -3,11 +3,12 @@ package com.xingcheng.appserver.service;
 import com.xingcheng.appserver.common.service.CommonService;
 import com.xingcheng.appserver.common.vo.SysUserVo;
 import com.xingcheng.appserver.entity.User;
+import com.xingcheng.appserver.vo.UserVO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface IUserService extends CommonService<User, User, Integer> {
+public interface IUserService extends CommonService<UserVO, User, Integer> {
 
     User findByUsernameAndPassword(String username,String password);
     /**

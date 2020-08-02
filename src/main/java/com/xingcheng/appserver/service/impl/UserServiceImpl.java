@@ -9,6 +9,7 @@ import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IUserService;
 import com.xingcheng.appserver.utils.exception.ExceptionFactory;
 import com.xingcheng.appserver.utils.util.MD5Utils;
+import com.xingcheng.appserver.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl extends CommonServiceImpl<User, User, Integer> implements IUserService {
+public class UserServiceImpl extends CommonServiceImpl<UserVO, User, Integer> implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 

@@ -1,5 +1,5 @@
 package com.xingcheng.appserver.controller;
-
+/*
 import com.xingcheng.appserver.common.Limiter;
 import com.xingcheng.appserver.entity.User;
 import com.xingcheng.appserver.service.IMailService;
@@ -33,10 +33,22 @@ import java.util.Map;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
+*/
+
+import com.xingcheng.appserver.common.controller.CommonController;
+import com.xingcheng.appserver.entity.User;
+import com.xingcheng.appserver.service.IUserService;
+import com.xingcheng.appserver.vo.UserVO;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 /**
  * @author shenjindui
  * @create 2020-07-15 13:31
- **/
+ **//*
 
 @RestController
 @RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
@@ -79,11 +91,11 @@ public class UserController extends BaseAppAction {
     @ApiOperation(value = "注册操作", notes = "用户详注册的详细信息")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseVO register(@ApiParam(value = "请输入注册信息",required = true) @Validated RegisterVO registerVO){
-        /*User user = userService.save(User.of((registerVO.getUsername()),
+        *//*User user = userService.save(User.of((registerVO.getUsername()),
                 (registerVO.getPassword()),registerVO.getNicknames(),registerVO.getEmail()).setEnabled(SysConstant.ENABLE));
         if(user!=null){
             return successResponse(user, SysConstant.REGISTER_SUCCESS);
-        }*/
+        }*//*
         return errorResponse(SysConstant.SAVE_ERROR);
     }
 
@@ -128,5 +140,21 @@ public class UserController extends BaseAppAction {
             return errorResponse(e.getMessage());
         }
     }
+
+}*/
+
+@RestController
+@RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
+@Api(description = "用户信息管理")
+public class UserController extends CommonController<UserVO, User, Integer> {
+    @Autowired
+    private IUserService userService;
+
+    /*@ApiOperation(value = "登陆操作", notes = "根据账号密码获取用户详细信息")
+    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    public Result<User> login(@ApiParam(value = "请输入账号密码",required = true) @Validated LoginVO loginVO) {
+        return super.get(1);
+    }
+*/
 
 }

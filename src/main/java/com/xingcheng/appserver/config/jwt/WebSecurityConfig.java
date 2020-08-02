@@ -16,8 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Spring Security配置类
  *
- * @author zhuhuix
- * @date 2020-03-25
+ * @author shenjindui
+ * @date 2020-07-25
  */
 
 @Configuration
@@ -96,7 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/forgotPassword", "/error/**").permitAll()
                 .antMatchers("/api/user/forgetSendMail", "/error/**").permitAll()
 
-                .antMatchers("/sysUser1/get/*", "/error/**").permitAll()
+                .antMatchers("//api/user/*/*", "/error/**").permitAll()
+                .antMatchers("//api/user/*", "/error/**").permitAll()
 
                 // 所有请求都需要认证
                 .anyRequest().authenticated();

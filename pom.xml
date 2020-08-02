@@ -137,6 +137,12 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
+        <!--提供更多的加密、填充方式-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
     </dependencies>
 
     <build>
